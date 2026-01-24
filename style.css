@@ -1,0 +1,442 @@
+:root {
+    --shell-color: #8c2438;
+    --panel-color: #e8d7bb;
+    --dpad-dark: #333;
+    --dpad-light: #555;
+    --btn-dark: #6e172a;
+    --btn-light: #a02e43;
+    --text-color: #333;
+}
+
+body {
+    background: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Press Start 2P', cursive; /* Idealnie, gdyby była podlinkowana czcionka */
+    overflow: hidden;
+}
+
+.pad-container {
+    perspective: 1000px;
+}
+
+.famicom-pad {
+    position: relative;
+    width: 650px;
+    height: 280px;
+    transform: rotateX(10deg) rotateZ(-2deg); /* Lekkie obrócenie dla efektu 3D */
+    filter: drop-shadow(0 30px 50px rgba(0,0,0,0.7));
+}
+
+.outer-shell {
+    width: 100%;
+    height: 100%;
+    background: var(--shell-color);
+    border-radius: 40px;
+    box-shadow: 
+        inset 0 10px 20px rgba(0,0,0,0.3), /* Górny cień wewnętrzny */
+        inset 0 -10px 20px rgba(255,255,255,0.1), /* Dolny refleks wewnętrzny */
+        0 8px 15px rgba(0,0,0,0.4), /* Cień zewnętrzny pod padem */
+        0 2px 0 var(--shell-color), /* Delikatny rąbek */
+        0 5px 0 var(--btn-dark); /* Głębokość obudowy */
+    border: 2px solid var(--btn-dark); /* Ciemna krawędź */
+}
+
+
+/* --- D-Pad --- */
+.dpad-wrapper {
+    position: absolute;
+    top: 100px;
+    left: 60px;
+    width: 90px;
+    height: 90px;
+    border-radius: 5px;
+
+}
+.main-panel {
+  
+    position: absolute;
+    /* Ustawiamy to dokładnie w miejscu, gdzie clip-path skręca */
+    top: 25px;
+    left: 25px;
+    width: calc(100% - 50px);
+    height: calc(100% - 50px);
+    background: var(--panel-color);
+    border-radius: 20px;/* To robi 3 rogi zewnętrzne */
+    box-shadow: 
+        inset 0 0 10px rgba(0,0,0,0.1), /* Subtelny cień wewnętrzny */
+        0 2px 3px rgba(0,0,0,0.1); /* Cień pod panelem */
+    
+    /* Dodajemy ten charakterystyczny kształt panelu */
+   clip-path: polygon(
+     0% 0%, 
+        calc(63% - 150px) 0%, 
+        calc(65% - 160px) 35%, /* Zaczyna się wcięcie */
+        100% 35%, /* Wcięcie w prawo */
+        100% 100%, 
+        0% 100%  
+    );
+    /* TO ROBI ZAOKRĄGLENIE W ŚRODKU */
+    border-top-right-radius: 102px; 
+}
+.dpad-horizontal, .dpad-vertical {
+    position: absolute;
+    background: var(--dpad-dark);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.3);
+    border-radius: 5px;
+}
+
+.dpad-horizontal {
+    width: 100%;
+    height: 30px;
+    top: 30px;
+    left: 0;
+}
+
+.dpad-vertical {
+    width: 30px;
+    height: 10%;
+    top: 0;
+    left: 30px;
+}
+
+.dpad-center {
+     position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, var(--dpad-light) 0%, var(--dpad-dark) 100%);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 5px rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.4);
+}
+/* --- Player Indicator --- */
+.player-indicator {
+    position: absolute;
+    top: 25px;
+    left: 20px;
+    width: 35px;
+    height: 35px;
+    background: var(--dpad-dark);
+    border: 2px solid #222;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.player-num {
+    color: #e8d7bb;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* --- Select/Start Buttons --- */
+.select-start-panel {
+    position: absolute;
+    top: 160px;
+    left: 200px;
+    width: 150px;
+    height: 35px;
+    background: var(--btn-dark);
+    border-radius: 17px;
+    box-shadow: 
+        inset 0 2px 5px rgba(0,0,0,0.4), 
+        0 4px 8px rgba(0,0,0,0.3),
+        0 2px 0 var(--btn-dark);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.select-btn, .start-btn {
+    width: 50px;
+    height: 15px;
+    background: radial-gradient(circle, #555 0%, #333 100%);
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(255,255,255,0.2);
+}
+
+.select-text, .start-text {
+    position: absolute;
+    font-size: 12px;
+    color: var(--text-color);
+    text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+    letter-spacing: 0.8px;
+    font-weight: 900; /* MAKSYMALNE POGRUBIENIE */
+
+}
+.select-text { top: -18px; left: 26px; }
+.start-text { top: -18px; right: 26px; }
+
+
+/* --- Action Buttons (A/B) --- */
+.action-buttons {
+    position: absolute;
+    top: 138px;
+    right: 30px;
+    display: flex;
+    gap: 30px; /* Odstęp między przyciskami */
+}
+
+.button-a, .button-b {
+    width: 60px;
+    height: 60px;
+    background: var(--btn-light);
+    border-radius: 50%;
+    box-shadow: 
+        inset 0 5px 10px rgba(255,255,255,0.3), /* Górny refleks */
+        inset 0 -5px 10px rgba(0,0,0,0.3), /* Dolny cień */
+        0 5px 12px rgba(0,0,0,0.5), /* Zewnętrzny cień */
+        0 2px 0 var(--btn-dark); /* Głębokość guzika */
+    border: 2px solid var(--btn-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-a span, .button-b span {
+    color: #eee;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+
+
+/* Kontener na czarne ramki nad przyciskami */
+.labels-container {
+    position: absolute;
+    top: 100px; /* Ustawienie pionowe nad guzikami */
+    right: 60px; /* Dopasowanie do prawej strony */
+    display: flex;
+    gap: 48px; /* Odstęp między ramką B a ramką A */
+    z-index: 10;
+}
+
+/* Czarne ramki (pigułki) z literami */
+.label-box {
+    background: #111; /* Głęboka czerń ramki */
+    color: #e8d7bb;   /* Złoty kolor litery (taki jak tło panelu) */
+    width: 45px;
+    height: 22px;
+    border-radius: 11px; /* Zaokrąglone końce */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.3); /* Lekki cień ramki */
+}
+
+/* Stylizacja samych okrągłych przycisków */
+.action-buttons {
+    position: absolute;
+    bottom: 35px; /* Przesunięcie guzików niżej */
+    right: 45px;
+    display: flex;
+    gap: 30px;
+}
+
+.button-a, .button-b {
+    width: 62px;
+    height: 62px;
+    background: #a02e43; /* Czerwień Famicoma */
+    border-radius: 50%;
+    border: 3px solid #5a1220;
+    box-shadow: 
+        inset 0 5px 10px rgba(255,255,255,0.2),
+        0 6px 0 #5a1220; /* Efekt 3D przycisku */
+}
+/* Stylizacja strzałek wewnątrz krzyżaka */
+.arrow {
+    position: absolute;
+    background-color: var(--panel-color); /* Kolor złoty/tła panelu */
+    width: 16px;
+    height: 16px;
+    z-index: 5;
+}
+
+/* Pozycjonowanie i kształt każdej strzałki */
+.arrow-up {
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Grubszy trójkąt góra */
+}
+
+.arrow-down {
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    clip-path: polygon(50% 100%, 0% 0%, 100% 0%); /* Grubszy trójkąt dół */
+}
+
+.arrow-left {
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    clip-path: polygon(0% 50%, 100% 0%, 100% 100%); /* Grubszy trójkąt lewo */
+}
+
+.arrow-right {
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    clip-path: polygon(100% 50%, 0% 0%, 0% 100%); /* Grubszy trójkąt prawo */
+}
+
+/* Ważne poprawki dla ramion krzyżaka, żeby strzałki były widoczne */
+.dpad-horizontal, .dpad-vertical {
+    position: absolute;
+    background: var(--dpad-dark);
+    box-shadow: inset 0 2px 5px #000, 0 4px 8px rgba(0,0,0,0.5);
+    border-radius: 4px;
+}
+
+.dpad-horizontal { 
+    width: 100%; 
+    height: 32px; 
+    top: 29px; 
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dpad-vertical { 
+    width: 32px; 
+    height: 100%; 
+    left: 29px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.decorative-lines {
+    position: absolute;
+    bottom: 45px; /* Wysokość dopasowana do osi przycisków A/B i Select/Start */
+    left: 0;
+    width: 100%;
+    height: 10px; /* Całkowita grubość */
+    
+    /* Dwa czarne paski z przerwą */
+    background: linear-gradient(
+        to bottom,
+        #111 0%, #111 20%, 
+        transparent 20%, transparent 80%, 
+        #111 80%, #111 100%
+    );
+    
+    opacity: 0.6; /* Subtelny wygląd nadruku */
+    z-index: 1;   /* Najniższa warstwa nad tłem */
+    pointer-events: none;
+}
+
+/* Upewnij się, że reszta elementów ma wyższy z-index, żeby przykryły paski */
+.dpad-wrapper, 
+.select-start-panel, 
+.action-buttons, 
+.player-indicator, 
+.labels-container {
+    z-index: 5; /* Wyższa warstwa niż paski */
+}
+
+/* --- Ramka wokół Krzyżaka (D-Pad) --- */
+.dpad-wrapper {
+    /* Ten trik tworzy czerwoną obwódkę idealnie wokół kształtu krzyża */
+    filter: 
+        drop-shadow(8px 0 0 #a02e43) 
+        drop-shadow(-8px 0 0 #a02e43) 
+        drop-shadow(0 8px 0 #a02e43) 
+        drop-shadow(0 -8px 0 #a02e43);
+}
+
+/* --- Ramki wokół przycisków A i B --- */
+.button-a.with-frame, .button-b.with-frame {
+    position: relative;
+}
+
+/* Tworzymy ramkę jako pseudoelement, żeby nie psuć cieni przycisku */
+.button-a.with-frame::after, .button-b.with-frame::after {
+    content: "";
+    position: absolute;
+    top: -8px;   /* Odstęp ramki od przycisku */
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 40px solid #a02e43; /* Kolor bordowy/czerwony */
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Opcjonalnie: Jeśli ramka przycisków ma być pod pismem A/B */
+.labels-container {
+    z-index: 11; /* Podbijamy, żeby litery były nad ramkami */
+}
+
+.select-start-panel {
+    position: absolute;
+    top: 160px;
+    left: 200px;
+    width: 150px;
+    height: 50px;
+    background: var(--btn-dark);
+    border-radius: 17px;
+    z-index: 5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+
+    /* --- TO DAJE EFEKT WYPUKŁOŚCI (3D) --- */
+    background: linear-gradient(to bottom, 
+        #8a1d35 110%,    /* Jaśniejsza góra - światło pada z góry */
+        #6e172a 50%,   /* Twój bazowy kolor */
+        #4d0f1d 100%   /* Ciemniejszy dół - cień własny elementu */
+    );
+
+    box-shadow: 
+        0 8px 15px rgba(0,0,0,0.5),           /* Głęboki cień pod całą wyspą na panelu */
+        inset 0 4px 4px rgba(255,255,255,0.3), /* Biały blik na górnej krawędzi (krawędź łapiąca światło) */
+        inset 0 -4px 6px rgba(0,0,0,0.4),      /* Wewnętrzny cień na dole (pogłębia wypukłość) */
+        0 1px 0 #4d0f1d;                       /* Fizyczna „grubość” plastiku pod spodem */
+
+    border: px solid #9c2b43; /* Cienka, jaśniejsza linia na krawędzi dla ostrości */
+}
+.select-btn, .start-btn {
+    width: 48px;
+    height: 14px;
+    background: #333; /* Ciemny antracyt */
+    border-radius: 7px;
+    position: relative;
+
+    /* EFEKT WYPUKŁOŚCI GUMY */
+    background: linear-gradient(to bottom, 
+        #444 0%,   /* Jaśniejszy czubek przycisku */
+        #222 100%  /* Ciemniejszy dół */
+    );
+
+    box-shadow: 
+        0 3px 5px rgba(0,0,0,0.8),          /* Cień pod przyciskiem (rzucany na czerwoną wyspę) */
+        0 1px 0 rgba(255,255,255,0.2) inset, /* Delikatny blik na samej górze przycisku */
+        0 2px 0 #111;                       /* "Boczek" przycisku, dający mu fizyczną wysokość */
+
+    border: 1px solid #111;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+/* EFEKT KLIKNIĘCIA - żeby było wesoło Daniel! */
+.select-btn:active, .start-btn:active {
+    transform: translateY(2px); /* Przycisk fizycznie opada przy kliknięciu */
+    box-shadow: 
+        0 1px 2px rgba(0,0,0,0.8), 
+        0 1px 0 rgba(255,255,255,0.1) inset;
+}
