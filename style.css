@@ -17,7 +17,6 @@ body {
     font-family: 'Press Start 2P', cursive; /* Idealnie, gdyby była podlinkowana czcionka */
     overflow: hidden;
 }
-
 .pad-container {
     perspective: 1000px;
 }
@@ -439,5 +438,6 @@ body {
         0 1px 2px rgba(0,0,0,0.8), 
         0 1px 0 rgba(255,255,255,0.1) inset;
 }
+
 
 
