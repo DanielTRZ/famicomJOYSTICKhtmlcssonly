@@ -14,7 +14,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    font-family: 'Press Start 2P', cursive; /* Idealnie, gdyby była podlinkowana czcionka */
+    font-family: 'Press Start 2P', cursive; 
     overflow: hidden;
 }
 .pad-container {
@@ -436,6 +436,7 @@ body {
         0 1px 2px rgba(0,0,0,0.8), 
         0 1px 0 rgba(255,255,255,0.1) inset;
 }
+
 
 
 
