@@ -26,7 +26,7 @@ body {
 .pad-container {
     perspective: 1000px;
 }
-.famicom-pad {
+.famicom-pad 
     position: relative;
     width: 650px;
     height: 280px;
